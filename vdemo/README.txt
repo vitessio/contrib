@@ -17,6 +17,6 @@ kvtctl Materialize ProductSales 'select pid, count(*) as kount, sum(price) as am
 kvtctl Expose product ProductSales
 
 Migrate orders
-kvtctl MigrateReads merchant MerchantOrder rdonly
-kvtctl MigrateReads merchant MerchantOrder replica
-kvtctl MigrateWrites merchant MerchantOrder
+kvtctl MigrateReads -workflow=MerchantOrder merchant rdonly
+kvtctl MigrateReads -workflow=MerchantOrder merchant replica
+kvtctl MigrateWrites -workflow=MerchantOrder merchant

@@ -2,7 +2,7 @@ A golang CLI utility to generate vtctlclient commands to add vreplication
 rules:
 
 ```
-Usage: ./vreplgen <tablet_id> <src_keyspace> <src_shard> <dest_keyspace> <dest_table1> 'filter1' [<dest_table2> 'filter2']...
+Usage: vreplgen [-on_ddl (ignore|stop|exec|exec_ignore)] <tablet_id> <src_keyspace> <src_shard> <dest_keyspace> <dest_table1> 'filter1' [<dest_table2> 'filter2']...
 ```
 
 E.g.:
@@ -30,3 +30,14 @@ you want `vreplgen` to generate, e.g.:
 ```
 export VTCTLCLIENT="vtctlclient -server vtctld:15999"
 ```
+
+Lastly, you can control the on_ddl flag using vreplgen. The default if you
+do not specify the `-on_ddl` option is `ignore`, but you can specify:
+
+  * `-on_ddl ignore`
+  * `-on_ddl stop`
+  * `-on_ddl exec`
+  * `-on_ddl exec_ignore`
+
+depending on how you want your DDL to be handled in your replication streams.
+See the main vreplication documentation for more details.

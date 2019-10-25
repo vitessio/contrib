@@ -46,7 +46,7 @@ func main() {
 	}
 
 	if (len(os.Args) < (7+argOffset)) {
-		fmt.Println("Usage: /vreplgen [-on_ddl (ignore|stop|exec|exec_ignore)] <tablet_id> <src_keyspace> <src_shard> <dest_keyspace> <dest_table1> 'filter1' [<dest_table2> 'filter2']...")
+		fmt.Println("Usage: vreplgen [-on_ddl (ignore|stop|exec|exec_ignore)] <tablet_id> <src_keyspace> <src_shard> <dest_keyspace> <dest_table1> 'filter1' [<dest_table2> 'filter2']...")
 		os.Exit(1)
 	}
 

@@ -24,6 +24,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"os"
 	"strings"
 
 	"vitess.io/vitess/go/sqltypes"
@@ -31,18 +32,36 @@ import (
 )
 
 func main() {
-	vtctl := "./lvtctl.sh"
-	tabletID := "test-400"
-	dbName := "vt_merchant"
+	vtctl := os.Getenv("VTCTLCLIENT")
+	if (vtctl == "") {
+	  vtctl = "vtctlclient -server localhost:15999"
+	}
+	// TODO: DDL ignore or not
+	if (len(os.Args) < 7) {
+		fmt.Println("Usage: /vreplgen <tablet_id> <src_keyspace> <src_shard> <dest_keyspace> <dest_table1> 'filter1' [<dest_table2> 'filter2']...")
+		os.Exit(1)
+	}
+	tabletID := os.Args[1]
+	sourceKeyspace := os.Args[2]
+	sourceShard := os.Args[3]
+	destKeyspace := os.Args[4]
+	destDbName := "vt_" + destKeyspace
+	listSize := (len(os.Args) - 5)/2
+	rules := make([]*binlogdatapb.Rule, listSize)
+	for i := 5; i < len(os.Args); i = i+2 {
+		destTable := os.Args[i]
+		destFilter := os.Args[i+1]
+		rule := new(binlogdatapb.Rule)
+		rule.Match = destTable
+		rule.Filter = destFilter
+		rules = append(rules, rule)
+	}
 	filter := &binlogdatapb.Filter{
-		Rules: []*binlogdatapb.Rule{{
-			Match:  "morder",
-			Filter: "select * from uorder where in_keyrange(mname, 'unicode_loose_md5', '-80')",
-		}},
+		Rules: rules,
 	}
 	bls := &binlogdatapb.BinlogSource{
-		Keyspace: "user",
-		Shard:    "-80",
+		Keyspace: sourceKeyspace,
+		Shard:    sourceShard,
 		Filter:   filter,
 		OnDdl:    binlogdatapb.OnDDLAction_IGNORE,
 	}
@@ -51,7 +70,7 @@ func main() {
 	val.EncodeSQL(&sqlEscaped)
 	query := fmt.Sprintf("insert into _vt.vreplication "+
 		"(db_name, source, pos, max_tps, max_replication_lag, tablet_types, time_updated, transaction_timestamp, state) values"+
-		"('%s', %s, '', 9999, 9999, 'master', 0, 0, 'Running')", dbName, sqlEscaped.String())
+		"('%s', %s, '', 9999, 9999, 'master', 0, 0, 'Running')", destDbName, sqlEscaped.String())
 
 	fmt.Printf("%s VReplicationExec %s '%s'\n", vtctl, tabletID, strings.Replace(query, "'", "'\"'\"'", -1))
 }

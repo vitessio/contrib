@@ -1,0 +1,199 @@
+<html><body><h1>etcd: dump of all keys</h1>
+
+<style>
+/* Remove default bullets */
+ul, #root {
+  list-style-type: none;
+}
+
+/* Remove margins and padding from the parent ul */
+#root {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the caret/arrow */
+.caret {
+  cursor: pointer;
+  user-select: none; /* Prevent text selection */
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.caret::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.caret-down::before {
+  transform: rotate(90deg);
+}
+
+/* Hide the nested list */
+.nested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.active {
+  display: block;
+}
+</style><a href='javascript:all(true)' style='text-decoration:none'>Expand All</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:all(false)' style='text-decoration:none'>Collapse All</a>
+<br><br><ul id='root'>
+<li><span class='caret'>root</span>
+<ul class='nested'>
+<li><span class='caret'>vitess</span>
+<ul class='nested'>
+<li><span class='caret'>global</span>
+<ul class='nested'>
+<li><span class='caret'>RoutingRules</span>
+<ul class='nested'>
+<li>rules:&lt;from_table:&#34;product&#34; to_tables:&#34;product.product&#34; to_tables:&#34;customer.product&#34; &gt; </li></ul></li><li><span class='caret'>cells</span>
+<ul class='nested'>
+<li><span class='caret'>test</span>
+<ul class='nested'>
+<li><span class='caret'>CellInfo</span>
+<ul class='nested'>
+<li>server_address:&#34;localhost:2379&#34; root:&#34;/vitess/test&#34; </li></ul></li><li><span class='caret'>elections</span>
+<ul class='nested'>
+<li><span class='caret'>vtctld</span>
+<ul class='nested'>
+<li><span class='caret'>locks</span>
+<ul class='nested'>
+<li><span class='caret'>7587843463538792201</span>
+<ul class='nested'>
+<li>rohit-ubuntu:15000</li></ul></li><li><span class='caret'>keyspaces</span>
+<ul class='nested'>
+<li><span class='caret'>customer</span>
+<ul class='nested'>
+<li><span class='caret'>Keyspace</span>
+<ul class='nested'>
+<li></li></ul></li><li><span class='caret'>VSchema</span>
+<ul class='nested'>
+<li>sharded:true vindexes:&lt;key:&#34;hash&#34; value:&lt;type:&#34;hash&#34; &gt; &gt; tables:&lt;key:&#34;customer&#34; value:&lt;column_vindexes:&lt;column:&#34;cid&#34; name:&#34;hash&#34; &gt; auto_increment:&lt;column:&#34;cid&#34; sequence:&#34;customer_seq&#34; &gt; &gt; &gt; tables:&lt;key:&#34;orders&#34; value:&lt;column_vindexes:&lt;column:&#34;cid&#34; name:&#34;hash&#34; &gt; auto_increment:&lt;column:&#34;oid&#34; sequence:&#34;order_seq&#34; &gt; &gt; &gt; tables:&lt;key:&#34;product&#34; value:&lt;type:&#34;reference&#34; &gt; &gt; </li></ul></li><li><span class='caret'>shards</span>
+<ul class='nested'>
+<li><span class='caret'>-80</span>
+<ul class='nested'>
+<li><span class='caret'>Shard</span>
+<ul class='nested'>
+<li>master_alias:&lt;cell:&#34;test&#34; uid:200 &gt; master_term_start_time:&lt;seconds:1578091139 nanoseconds:193973511 &gt; key_range:&lt;end:&#34;\200&#34; &gt; is_master_serving:true </li></ul></li><li><span class='caret'>80-</span>
+<ul class='nested'>
+<li><span class='caret'>Shard</span>
+<ul class='nested'>
+<li>master_alias:&lt;cell:&#34;test&#34; uid:300 &gt; master_term_start_time:&lt;seconds:1578091139 nanoseconds:196639342 &gt; key_range:&lt;start:&#34;\200&#34; &gt; is_master_serving:true </li></ul></li><li><span class='caret'>merchant</span>
+<ul class='nested'>
+<li><span class='caret'>Keyspace</span>
+<ul class='nested'>
+<li></li></ul></li><li><span class='caret'>VSchema</span>
+<ul class='nested'>
+<li>sharded:true vindexes:&lt;key:&#34;md5&#34; value:&lt;type:&#34;unicode_loose_md5&#34; &gt; &gt; tables:&lt;key:&#34;merchant&#34; value:&lt;column_vindexes:&lt;column:&#34;mname&#34; name:&#34;md5&#34; &gt; &gt; &gt; </li></ul></li><li><span class='caret'>shards</span>
+<ul class='nested'>
+<li><span class='caret'>-80</span>
+<ul class='nested'>
+<li><span class='caret'>Shard</span>
+<ul class='nested'>
+<li>master_alias:&lt;cell:&#34;test&#34; uid:400 &gt; master_term_start_time:&lt;seconds:1578091139 nanoseconds:193955848 &gt; key_range:&lt;end:&#34;\200&#34; &gt; is_master_serving:true </li></ul></li><li><span class='caret'>80-</span>
+<ul class='nested'>
+<li><span class='caret'>Shard</span>
+<ul class='nested'>
+<li>master_alias:&lt;cell:&#34;test&#34; uid:500 &gt; master_term_start_time:&lt;seconds:1578091139 nanoseconds:193933650 &gt; key_range:&lt;start:&#34;\200&#34; &gt; is_master_serving:true </li></ul></li><li><span class='caret'>product</span>
+<ul class='nested'>
+<li><span class='caret'>Keyspace</span>
+<ul class='nested'>
+<li></li></ul></li><li><span class='caret'>VSchema</span>
+<ul class='nested'>
+<li>tables:&lt;key:&#34;customer_seq&#34; value:&lt;type:&#34;sequence&#34; &gt; &gt; tables:&lt;key:&#34;order_seq&#34; value:&lt;type:&#34;sequence&#34; &gt; &gt; tables:&lt;key:&#34;product&#34; value:&lt;&gt; &gt; </li></ul></li><li><span class='caret'>shards</span>
+<ul class='nested'>
+<li><span class='caret'>0</span>
+<ul class='nested'>
+<li><span class='caret'>Shard</span>
+<ul class='nested'>
+<li>master_alias:&lt;cell:&#34;test&#34; uid:100 &gt; master_term_start_time:&lt;seconds:1578091139 nanoseconds:193925340 &gt; is_master_serving:true </li></ul></li><li><span class='caret'>test</span>
+<ul class='nested'>
+<li><span class='caret'>SrvVSchema</span>
+<ul class='nested'>
+<li>keyspaces:&lt;key:&#34;customer&#34; value:&lt;sharded:true vindexes:&lt;key:&#34;hash&#34; value:&lt;type:&#34;hash&#34; &gt; &gt; tables:&lt;key:&#34;customer&#34; value:&lt;column_vindexes:&lt;column:&#34;cid&#34; name:&#34;hash&#34; &gt; auto_increment:&lt;column:&#34;cid&#34; sequence:&#34;customer_seq&#34; &gt; &gt; &gt; tables:&lt;key:&#34;orders&#34; value:&lt;column_vindexes:&lt;column:&#34;cid&#34; name:&#34;hash&#34; &gt; auto_increment:&lt;column:&#34;oid&#34; sequence:&#34;order_seq&#34; &gt; &gt; &gt; tables:&lt;key:&#34;product&#34; value:&lt;type:&#34;reference&#34; &gt; &gt; &gt; &gt; keyspaces:&lt;key:&#34;merchant&#34; value:&lt;sharded:true vindexes:&lt;key:&#34;md5&#34; value:&lt;type:&#34;unicode_loose_md5&#34; &gt; &gt; tables:&lt;key:&#34;merchant&#34; value:&lt;column_vindexes:&lt;column:&#34;mname&#34; name:&#34;md5&#34; &gt; &gt; &gt; &gt; &gt; keyspaces:&lt;key:&#34;product&#34; value:&lt;tables:&lt;key:&#34;customer_seq&#34; value:&lt;type:&#34;sequence&#34; &gt; &gt; tables:&lt;key:&#34;order_seq&#34; value:&lt;type:&#34;sequence&#34; &gt; &gt; tables:&lt;key:&#34;product&#34; value:&lt;&gt; &gt; &gt; &gt; routing_rules:&lt;rules:&lt;from_table:&#34;product&#34; to_tables:&#34;product.product&#34; to_tables:&#34;customer.product&#34; &gt; &gt; </li></ul></li><li><span class='caret'>keyspaces</span>
+<ul class='nested'>
+<li><span class='caret'>customer</span>
+<ul class='nested'>
+<li><span class='caret'>SrvKeyspace</span>
+<ul class='nested'>
+<li>partitions:&lt;served_type:MASTER shard_references:&lt;name:&#34;-80&#34; key_range:&lt;end:&#34;\200&#34; &gt; &gt; shard_references:&lt;name:&#34;80-&#34; key_range:&lt;start:&#34;\200&#34; &gt; &gt; &gt; partitions:&lt;served_type:REPLICA shard_references:&lt;name:&#34;-80&#34; key_range:&lt;end:&#34;\200&#34; &gt; &gt; shard_references:&lt;name:&#34;80-&#34; key_range:&lt;start:&#34;\200&#34; &gt; &gt; &gt; partitions:&lt;served_type:RDONLY shard_references:&lt;name:&#34;-80&#34; key_range:&lt;end:&#34;\200&#34; &gt; &gt; shard_references:&lt;name:&#34;80-&#34; key_range:&lt;start:&#34;\200&#34; &gt; &gt; &gt; </li></ul></li><li><span class='caret'>shards</span>
+<ul class='nested'>
+<li><span class='caret'>-80</span>
+<ul class='nested'>
+<li><span class='caret'>ShardReplication</span>
+<ul class='nested'>
+<li>nodes:&lt;tablet_alias:&lt;cell:&#34;test&#34; uid:200 &gt; &gt; </li></ul></li><li><span class='caret'>80-</span>
+<ul class='nested'>
+<li><span class='caret'>ShardReplication</span>
+<ul class='nested'>
+<li>nodes:&lt;tablet_alias:&lt;cell:&#34;test&#34; uid:300 &gt; &gt; </li></ul></li><li><span class='caret'>merchant</span>
+<ul class='nested'>
+<li><span class='caret'>SrvKeyspace</span>
+<ul class='nested'>
+<li>partitions:&lt;served_type:MASTER shard_references:&lt;name:&#34;-80&#34; key_range:&lt;end:&#34;\200&#34; &gt; &gt; shard_references:&lt;name:&#34;80-&#34; key_range:&lt;start:&#34;\200&#34; &gt; &gt; &gt; partitions:&lt;served_type:REPLICA shard_references:&lt;name:&#34;-80&#34; key_range:&lt;end:&#34;\200&#34; &gt; &gt; shard_references:&lt;name:&#34;80-&#34; key_range:&lt;start:&#34;\200&#34; &gt; &gt; &gt; partitions:&lt;served_type:RDONLY shard_references:&lt;name:&#34;-80&#34; key_range:&lt;end:&#34;\200&#34; &gt; &gt; shard_references:&lt;name:&#34;80-&#34; key_range:&lt;start:&#34;\200&#34; &gt; &gt; &gt; </li></ul></li><li><span class='caret'>shards</span>
+<ul class='nested'>
+<li><span class='caret'>-80</span>
+<ul class='nested'>
+<li><span class='caret'>ShardReplication</span>
+<ul class='nested'>
+<li>nodes:&lt;tablet_alias:&lt;cell:&#34;test&#34; uid:400 &gt; &gt; </li></ul></li><li><span class='caret'>80-</span>
+<ul class='nested'>
+<li><span class='caret'>ShardReplication</span>
+<ul class='nested'>
+<li>nodes:&lt;tablet_alias:&lt;cell:&#34;test&#34; uid:500 &gt; &gt; </li></ul></li><li><span class='caret'>product</span>
+<ul class='nested'>
+<li><span class='caret'>SrvKeyspace</span>
+<ul class='nested'>
+<li>partitions:&lt;served_type:MASTER shard_references:&lt;name:&#34;0&#34; &gt; &gt; partitions:&lt;served_type:REPLICA shard_references:&lt;name:&#34;0&#34; &gt; &gt; partitions:&lt;served_type:RDONLY shard_references:&lt;name:&#34;0&#34; &gt; &gt; </li></ul></li><li><span class='caret'>shards</span>
+<ul class='nested'>
+<li><span class='caret'>0</span>
+<ul class='nested'>
+<li><span class='caret'>ShardReplication</span>
+<ul class='nested'>
+<li>nodes:&lt;tablet_alias:&lt;cell:&#34;test&#34; uid:100 &gt; &gt; </li></ul></li><li><span class='caret'>tablets</span>
+<ul class='nested'>
+<li><span class='caret'>test-0000000100</span>
+<ul class='nested'>
+<li><span class='caret'>Tablet</span>
+<ul class='nested'>
+<li>alias:&lt;cell:&#34;test&#34; uid:100 &gt; hostname:&#34;rohit-ubuntu&#34; port_map:&lt;key:&#34;grpc&#34; value:16100 &gt; port_map:&lt;key:&#34;mysql&#34; value:17100 &gt; port_map:&lt;key:&#34;vt&#34; value:15100 &gt; keyspace:&#34;product&#34; shard:&#34;0&#34; type:MASTER mysql_hostname:&#34;rohit-ubuntu&#34; mysql_port:17100 master_term_start_time:&lt;seconds:1578091139 nanoseconds:193925340 &gt; </li></ul></li><li><span class='caret'>test-0000000200</span>
+<ul class='nested'>
+<li><span class='caret'>Tablet</span>
+<ul class='nested'>
+<li>alias:&lt;cell:&#34;test&#34; uid:200 &gt; hostname:&#34;rohit-ubuntu&#34; port_map:&lt;key:&#34;grpc&#34; value:16200 &gt; port_map:&lt;key:&#34;mysql&#34; value:17200 &gt; port_map:&lt;key:&#34;vt&#34; value:15200 &gt; keyspace:&#34;customer&#34; shard:&#34;-80&#34; key_range:&lt;end:&#34;\200&#34; &gt; type:MASTER mysql_hostname:&#34;rohit-ubuntu&#34; mysql_port:17200 master_term_start_time:&lt;seconds:1578091139 nanoseconds:193973511 &gt; </li></ul></li><li><span class='caret'>test-0000000300</span>
+<ul class='nested'>
+<li><span class='caret'>Tablet</span>
+<ul class='nested'>
+<li>alias:&lt;cell:&#34;test&#34; uid:300 &gt; hostname:&#34;rohit-ubuntu&#34; port_map:&lt;key:&#34;grpc&#34; value:16300 &gt; port_map:&lt;key:&#34;mysql&#34; value:17300 &gt; port_map:&lt;key:&#34;vt&#34; value:15300 &gt; keyspace:&#34;customer&#34; shard:&#34;80-&#34; key_range:&lt;start:&#34;\200&#34; &gt; type:MASTER mysql_hostname:&#34;rohit-ubuntu&#34; mysql_port:17300 master_term_start_time:&lt;seconds:1578091139 nanoseconds:196639342 &gt; </li></ul></li><li><span class='caret'>test-0000000400</span>
+<ul class='nested'>
+<li><span class='caret'>Tablet</span>
+<ul class='nested'>
+<li>alias:&lt;cell:&#34;test&#34; uid:400 &gt; hostname:&#34;rohit-ubuntu&#34; port_map:&lt;key:&#34;grpc&#34; value:16400 &gt; port_map:&lt;key:&#34;mysql&#34; value:17400 &gt; port_map:&lt;key:&#34;vt&#34; value:15400 &gt; keyspace:&#34;merchant&#34; shard:&#34;-80&#34; key_range:&lt;end:&#34;\200&#34; &gt; type:MASTER mysql_hostname:&#34;rohit-ubuntu&#34; mysql_port:17400 master_term_start_time:&lt;seconds:1578091139 nanoseconds:193955848 &gt; </li></ul></li><li><span class='caret'>test-0000000500</span>
+<ul class='nested'>
+<li><span class='caret'>Tablet</span>
+<ul class='nested'>
+<li>alias:&lt;cell:&#34;test&#34; uid:500 &gt; hostname:&#34;rohit-ubuntu&#34; port_map:&lt;key:&#34;grpc&#34; value:16500 &gt; port_map:&lt;key:&#34;mysql&#34; value:17500 &gt; port_map:&lt;key:&#34;vt&#34; value:15500 &gt; keyspace:&#34;merchant&#34; shard:&#34;80-&#34; key_range:&lt;start:&#34;\200&#34; &gt; type:MASTER mysql_hostname:&#34;rohit-ubuntu&#34; mysql_port:17500 master_term_start_time:&lt;seconds:1578091139 nanoseconds:193933650 &gt; </li>
+<script>
+var toggler = document.getElementsByClassName("caret");
+var i;
+
+for (i = 0; i < toggler.length; i++) {
+  toggler[i].addEventListener("click", function() {
+    this.parentElement.querySelector(".nested").classList.toggle("active");
+    this.classList.toggle("caret-down");
+  });
+}
+
+function all(open) {
+	var elems = document.getElementsByClassName("nested")	
+	for (i=0; i < elems.length; i++) 
+			open ? elems[i].classList.add("active") : elems[i].classList.remove("active")
+	elems = document.getElementsByClassName("caret")	
+	for (i=0; i < elems.length; i++) 
+			open ? elems[i].classList.add("caret-down") : elems[i].classList.remove("caret-down")
+}
+</script>

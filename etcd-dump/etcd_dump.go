@@ -136,7 +136,6 @@ func store(tree *Tree, key string, value string ) {
 	typeString := paths[len(paths)-1]
 	if unicode.IsUpper(rune(typeString[0])) {
 		value = decodeProtoBuf(typeString, []byte(value))
-		//value = html.EscapeString(value)
 	}
 
 	paths = append(paths, value)

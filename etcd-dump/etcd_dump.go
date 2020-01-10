@@ -9,7 +9,6 @@ import (
 	"github.com/golang/protobuf/proto"
 	"github.com/pkg/browser"
 	"go.etcd.io/etcd/clientv3"
-	"html"
 	"io/ioutil"
 	"strings"
 	"time"
@@ -37,7 +36,7 @@ var (
 		"Tablet":&topodata.Tablet{},
 		"VSchema":&vschema.Keyspace{},
 	}
-
+	divIndex = 0
 )
 
 var css = `
@@ -81,6 +80,13 @@ ul, #root {
 .active {
   display: block;
 }
+.jsonview {
+  display:inline-block;
+  font-size:12px;
+  background:#fafafa;
+  padding-left:1px;padding-right:1px;
+}
+
 </style>`
 
 var js = `
@@ -130,7 +136,7 @@ func store(tree *Tree, key string, value string ) {
 	typeString := paths[len(paths)-1]
 	if unicode.IsUpper(rune(typeString[0])) {
 		value = decodeProtoBuf(typeString, []byte(value))
-		value = html.EscapeString(value)
+		//value = html.EscapeString(value)
 	}
 
 	paths = append(paths, value)
@@ -188,21 +194,32 @@ func flatten(tree *Tree) ([]Item, int) {
 		if level > maxLevel {
 			maxLevel = level
 		}
+
 	}
 	tree.root.traverse(0, callback)
 	for idx, item := range list {
 		if idx != len(list) -1 {
 			list[idx].next = list[idx+1].level - item.level
-			if list[idx].next < -1 {
-				list[idx].next = -1
-			}
 		}
 	}
 	return list, maxLevel
 }
 
+func fixupJson (val string) string {
+	val = strings.TrimSpace(val)
+	divIndex++
+	if strings.Index(val, "{") == 0 {
+		return fmt.Sprintf("<div id='json%d' class=jsonview></div><script>$('#json%d').JSONView('%s')</script>", divIndex, divIndex, val)
+	}
+	return val
+}
+
 func toHtml(list []Item) string {
-	html := "<html><body><h1>etcd: dump of all keys</h1>\n"
+	html := "<html>\n<head>\n"
+	html += "<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jquery-jsonview/1.2.3/jquery.jsonview.min.css' />\n"
+	html += "<script type='text/javascript' src='http://code.jquery.com/jquery.min.js'></script>\n"
+	html += "<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-jsonview/1.2.3/jquery.jsonview.min.js'></script>\n"
+	html += "</head><body><h1>Vitess Topology</h1>\n"
 	html += css
 	html += "<a href='javascript:all(true)' style='text-decoration:none'>Expand All</a>&nbsp;&nbsp;&nbsp;&nbsp;"
 	html += "<a href='javascript:all(false)' style='text-decoration:none'>Collapse All</a>\n"
@@ -218,25 +235,29 @@ func toHtml(list []Item) string {
 	}
 	push("</ul>")
 	for _, item := range list {
+		val := fixupJson(item.name)
 		switch item.next {
 		case 1:
-			html += "<li><span class='caret'>" + item.name + "</span>\n"
-			html += "<ul class='nested'>\n"
+			html += "<li><span class='caret'>" + val + "</span>\n<ul class='nested'>\n"
 			push("</ul></li>")
 			break
 		case 0:
-			html += "<li>"+item.name+"</li>"
-			break
-		case -1:
-			html += "<li>"+item.name+"</li>"
 			html += pop()
+			html += "<li>" + val + "</li>\n"
 			break
 		default:
-			panic(fmt.Sprintf("Invalid item.next %d", item.next))
-
+			if item.next > 1 {
+				panic("For increasing depth, next node has to be at the same level or immediately below")
+			}
+			html += "<li>" + val + "</li>\n"
+			n := -1 * item.next
+			for i := 0; i < n; i++ {
+				html += pop()
+			}
+			break
 		}
 	}
-	return html + js
+	return html + js + "<script>all(true)</script>\n</body>\n</html>\n"
 }
 
 func main() {

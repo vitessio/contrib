@@ -40,10 +40,10 @@ init_db_sql_file="$VTROOT/config/init_db.sql"
 
 case "$MYSQL_FLAVOR" in
   "MySQL56")
-    export EXTRA_MY_CNF=$VTROOT/config/mycnf/master_mysql56.cnf:$VTROOT/config/mycnf/rbr.cnf
+    export EXTRA_MY_CNF=$VTROOT/config/mycnf/master_mysql56.cnf
     ;;
   "MariaDB")
-    export EXTRA_MY_CNF=$VTROOT/config/mycnf/master_mariadb.cnf:$VTROOT/config/mycnf/rbr.cnf
+    export EXTRA_MY_CNF=$VTROOT/config/mycnf/master_mariadb.cnf
     ;;
   *)
     echo "Please set MYSQL_FLAVOR to MySQL56 or MariaDB."

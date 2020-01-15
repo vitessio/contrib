@@ -1,0 +1,10 @@
+{
+  "workflow": "morders",
+  "sourceKeyspace": "customer",
+  "targetKeyspace": "merchant",
+  "tableSettings": [{
+    "targetTable": "morders",
+    "sourceExpression": "select * from orders",
+    "create_ddl": "create table morders(oid int, cid int, mname varchar(128), pid int, price int, primary key(oid))"
+  }]
+}

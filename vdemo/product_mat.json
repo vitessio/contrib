@@ -1,0 +1,10 @@
+{
+  "workflow": "cproduct",
+  "sourceKeyspace": "product",
+  "targetKeyspace": "customer",
+  "tableSettings": [{
+    "targetTable": "cproduct",
+    "sourceExpression": "select * from product",
+    "create_ddl": "create table cproduct(pid bigint, description varchar(128), primary key(pid))"
+  }]
+}

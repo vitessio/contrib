@@ -36,8 +36,6 @@ echo "Starting vtctld..."
 $VTROOT/bin/vtctld \
   $TOPOLOGY_FLAGS \
   -cell $cell \
-  -web_dir $VTTOP/web/vtctld \
-  -web_dir2 $VTTOP/web/vtctld2/app \
   -workflow_manager_init \
   -workflow_manager_use_election \
   -service_map 'grpc-vtctl' \

@@ -1,0 +1,10 @@
+{
+  "workflow": "sales",
+  "sourceKeyspace": "customer",
+  "targetKeyspace": "product",
+  "tableSettings": [{
+    "targetTable": "sales",
+    "sourceExpression": "select pid, count(*) as kount, sum(price) as amount from orders group by pid",
+    "create_ddl": "create table sales(pid int, kount int, amount int, primary key(pid))"
+  }]
+}

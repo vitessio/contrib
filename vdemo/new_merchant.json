@@ -1,0 +1,30 @@
+{
+  "sharded": true,
+  "vindexes": {
+    "md5": {
+      "type": "unicode_loose_md5"
+    }
+  },
+  "tables": {
+    "merchant": {
+      "column_vindexes": [
+        {
+          "column": "mname",
+          "name": "md5"
+        }
+      ]
+    },
+    "morders": {
+      "column_vindexes": [
+        {
+          "column": "mname",
+          "name": "md5"
+        }
+      ],
+      "auto_increment": {
+        "column": "oid",
+        "sequence": "order_seq"
+      }
+    }
+  }
+}

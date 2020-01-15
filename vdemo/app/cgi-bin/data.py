@@ -151,18 +151,18 @@ def main():
         "select * from customer", response, keyspace="customer", kr="80-")
 
     exec_query(
-        rconn, "uorder0", "orders",
+        rconn, "corder0", "orders",
         "select * from orders", response, keyspace="customer", kr="-80")
     exec_query(
-        rconn, "uorder1", "orders",
+        rconn, "corder1", "orders",
         "select * from orders", response, keyspace="customer", kr="80-")
 
     exec_query(
-        rconn, "uproduct0", "product",
-        "select * from product", response, keyspace="customer", kr="-80")
+        rconn, "cproduct0", "cproduct",
+        "select * from cproduct", response, keyspace="customer", kr="-80")
     exec_query(
-        rconn, "uproduct1", "product",
-        "select * from product", response, keyspace="customer", kr="80-")
+        rconn, "cproduct1", "cproduct",
+        "select * from cproduct", response, keyspace="customer", kr="80-")
 
     exec_query(
         rconn, "merchant0", "merchant",
@@ -172,11 +172,11 @@ def main():
         "select * from merchant", response, keyspace="merchant", kr="80-")
 
     exec_query(
-        rconn, "morder0", "orders",
-        "select * from orders", response, keyspace="merchant", kr="-80")
+        rconn, "morder0", "morders",
+        "select * from morders", response, keyspace="merchant", kr="-80")
     exec_query(
-        rconn, "morder1", "orders",
-        "select * from orders", response, keyspace="merchant", kr="80-")
+        rconn, "morder1", "morders",
+        "select * from morders", response, keyspace="merchant", kr="80-")
 
     if response.get("error"):
       print >> sys.stderr, response["error"]

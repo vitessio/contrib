@@ -72,16 +72,16 @@ func getPosition(ctx context.Context, keyspace, shard string) (*binlogdatapb.VGt
 		return nil, err
 	}
 	// results contains multiple lines like this:
-	// zone1-0000000100 commerce 0 master sougou-XPS:15100 sougou-XPS:17100 [] MySQL56/ee59be3a-9cf5-11e9-a6e0-9cb6d089e1c3:1-9 0
-	// zone1-0000000101 commerce 0 replica sougou-XPS:15101 sougou-XPS:17101 [] MySQL56/ee59be3a-9cf5-11e9-a6e0-9cb6d089e1c3:1-9 0
-	// zone1-0000000102 commerce 0 rdonly sougou-XPS:15102 sougou-XPS:17102 [] MySQL56/ee59be3a-9cf5-11e9-a6e0-9cb6d089e1c3:1-9 0
+	// zone1-0000000100 commerce 0 master sougou-XPS:15100 sougou-XPS:17100 [] 2020-05-19T12:15:11Z MySQL56/ee59be3a-9cf5-11e9-a6e0-9cb6d089e1c3:1-9 0
+	// zone1-0000000101 commerce 0 replica sougou-XPS:15101 sougou-XPS:17101 [] <null> MySQL56/ee59be3a-9cf5-11e9-a6e0-9cb6d089e1c3:1-9 0
+	// zone1-0000000102 commerce 0 rdonly sougou-XPS:15102 sougou-XPS:17102 [] <null> MySQL56/ee59be3a-9cf5-11e9-a6e0-9cb6d089e1c3:1-9 0
 	// Just parse out one position.
 	splits := strings.Split(results[0], " ")
 	return &binlogdatapb.VGtid{
 		ShardGtids: []*binlogdatapb.ShardGtid{{
 			Keyspace: keyspace,
 			Shard:    shard,
-			Gtid:     splits[7],
+			Gtid:     splits[8],
 		}},
 	}, nil
 }

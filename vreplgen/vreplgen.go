@@ -32,35 +32,37 @@ import (
 	binlogdatapb "vitess.io/vitess/go/vt/proto/binlogdata"
 )
 
-var onDdl string
+var onDDL string
 
 func init() {
-	flag.StringVar(&onDdl, "on_ddl", "ignore", "Set on_ddl value for replication stream - ignore, stop, exec, exec_ignore")
-	flag.Parse()
+	flag.StringVar(&onDDL, "on_ddl", "ignore", "Set on_ddl value for replication stream - ignore, stop, exec, exec_ignore")
 }
 
 func main() {
-	argOffset := 0
-	if (len(os.Args) > 1 && strings.HasPrefix(os.Args[1], "-")) {
-		argOffset = 2
-	}
+	flag.Parse()
 
-	if (len(os.Args) < (7+argOffset)) {
+	if len(os.Args) < 9 {
 		fmt.Println("Usage: vreplgen [-on_ddl (ignore|stop|exec|exec_ignore)] <tablet_id> <src_keyspace> <src_shard> <dest_keyspace> <dest_table1> 'filter1' [<dest_table2> 'filter2']...")
 		os.Exit(1)
 	}
 
 	vtctl := os.Getenv("VTCTLCLIENT")
-	if (vtctl == "") {
-	  vtctl = "vtctlclient -server localhost:15999"
+	if vtctl == "" {
+		vtctl = "vtctlclient -server localhost:15999"
 	}
-	tabletID := os.Args[1+argOffset]
-	sourceKeyspace := os.Args[2+argOffset]
-	sourceShard := os.Args[3+argOffset]
-	destKeyspace := os.Args[4+argOffset]
-	destDbName := "vt_" + destKeyspace
+
+	// First, we process fixed positional arguments
+	//   such as the intended target and source
+	tabletID := os.Args[3]
+	sourceKeyspace := os.Args[4]
+	sourceShard := os.Args[5]
+	destKeyspace := os.Args[6]
+	destDbName := destKeyspace
 	var rules []*binlogdatapb.Rule
-	for i := 5+argOffset; i < len(os.Args); i = i+2 {
+
+	// Next, we iterate over all possible rules
+	//  Note this can be a variable number!
+	for i := 7; i < len(os.Args); i = i + 2 {
 		destTable := os.Args[i]
 		destFilter := os.Args[i+1]
 		rule := new(binlogdatapb.Rule)
@@ -72,23 +74,13 @@ func main() {
 		Rules: rules,
 	}
 
-	var onDdlAction binlogdatapb.OnDDLAction
-	switch onDdl {
-	case "ignore":
-		onDdlAction = binlogdatapb.OnDDLAction_IGNORE
-	case "stop":
-		onDdlAction = binlogdatapb.OnDDLAction_STOP
-	case "exec":
-		onDdlAction = binlogdatapb.OnDDLAction_EXEC
-	case "exec_ignore":
-		onDdlAction = binlogdatapb.OnDDLAction_EXEC_IGNORE
-	}
+	onDDLAction := binlogdatapb.OnDDLAction(binlogdatapb.OnDDLAction_value[strings.ToUpper(onDDL)])
 
 	bls := &binlogdatapb.BinlogSource{
 		Keyspace: sourceKeyspace,
 		Shard:    sourceShard,
 		Filter:   filter,
-		OnDdl:    onDdlAction,
+		OnDdl:    onDDLAction,
 	}
 	val := sqltypes.NewVarBinary(fmt.Sprintf("%v", bls))
 	var sqlEscaped bytes.Buffer

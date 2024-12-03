@@ -1,0 +1,53 @@
+# Bring up the initial cluster. We have 1 sharded keyspace with 2 shards and an unsharded keyspace.
+./101_initial_cluster.sh
+
+# Show the keyspace and the tablets on vtadmin.
+
+# Show the tables in the commerce keyspace.
+
+# Insert data into the table.
+mysql
+use commerce;
+insert into customer (customer_id, email) values (1, 'a@gmail.com');
+insert into customer (customer_id, email) values (2, 'b@gmail.com');
+insert into customer (customer_id, email) values (3, 'c@gmail.com');
+insert into customer (customer_id, email) values (4, 'd@gmail.com');
+insert into customer (customer_id, email) values (5, 'e@gmail.com');
+
+# Show data in both the shards and how reverse bits vindex works.
+use commerce/80-;
+select * from customer;
+use commerce/-80;
+select * from customer;
+use commerce;
+
+# Insert data into the corder table.
+insert into corder (order_id, customer_id, product) values (1, 1, 'product1');
+insert into corder (order_id, customer_id, product) values (2, 1, 'product2');
+insert into corder (order_id, customer_id, product) values (3, 1, 'product2');
+insert into corder (order_id, customer_id, product) values (4, 3, 'product1');
+insert into corder (order_id, customer_id, product) values (5, 4, 'product2');
+insert into corder (order_id, customer_id, product) values (6, 5, 'product1');
+use commerce/80-;
+select * from customer;
+select * from corder;
+use commerce/-80;
+select * from customer;
+select * from corder;
+use commerce;
+
+# Look at some queries and how Vitess plans them.
+vexplain select * from customer;
+vexplain select * from customer where customer_id = 1;
+vexplain select * from corder where order_id = 1;
+vexplain select * from corder where customer_id = 1;
+vexplain select * from corder join customer;
+vexplain select * from corder join customer on corder.customer_id = customer.customer_id;
+
+# Talk about secondary vindexes if time permits
+
+# Brind down the cluster
+./401_teardown.sh
+
+
+
